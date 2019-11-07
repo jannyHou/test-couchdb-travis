@@ -7,7 +7,6 @@ os:
   - linux
 
 script:
-  - cd test
   - npm run build
   - npm run test
 
@@ -36,7 +35,7 @@ matrix:
         # - curl -X PUT http://localhost:5984/testdb
 
       script:
-        - cd test && npm install && npm run build && npm run test
+        - npm run test
 
 branches:
   only:
