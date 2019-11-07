@@ -1,0 +1,23 @@
+import {Client, expect} from '@loopback/testlab';
+import {TestApplication} from '../..';
+import {setupApplication} from './test-helper';
+import {inspect} from 'util';
+
+describe('PingController', () => {
+  let app: TestApplication;
+  let client: Client;
+
+  before('setupApplication', async () => {
+    ({app, client} = await setupApplication());
+  });
+
+  after(async () => {
+    await app.stop();
+  });
+
+  it('invokes GET /ping', async () => {
+    const res = await client.get('/ping?msg=world').expect(200);
+    console.log(inspect(res.body));
+    expect(res.body).to.containEql({greeting: 'Hello from LoopBack'});
+  });
+});

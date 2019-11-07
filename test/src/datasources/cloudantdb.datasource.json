@@ -1,0 +1,9 @@
+{
+  "name": "cloudantdb",
+  "connector": "cloudant",
+  "url": "",
+  "database": "",
+  "username": "",
+  "password": "",
+  "modelIndex": ""
+}
