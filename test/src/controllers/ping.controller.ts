@@ -1,7 +1,6 @@
 import {Request, RestBindings, get, ResponseObject} from '@loopback/rest';
 import {inject} from '@loopback/context';
-import { CloudantdbDataSource } from '../datasources/cloudantdb.datasource';
-
+import {juggler} from '@loopback/repository';
 
 /**
  * OpenAPI response for ping()
@@ -35,7 +34,7 @@ const PING_RESPONSE: ResponseObject = {
 export class PingController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private req: Request,
-    @inject('datasources.cloudantdb') private db: CloudantdbDataSource
+    @inject('datasources.cloudantdb') private db: juggler.DataSource
     ) {}
 
   // Map to `GET /ping`
@@ -45,7 +44,13 @@ export class PingController {
     },
   })
   async ping(): Promise<object> {
-    const ping = await this.db.ping();
+    var ping;
+    try {
+      ping = await this.db.connect();
+    } catch (e) {
+      console.error(e);
+    }
+
     // Reply with a greeting, the current time, the url, and request headers
     return {
       ping: ping,
