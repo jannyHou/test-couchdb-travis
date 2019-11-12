@@ -20,7 +20,6 @@ matrix:
         - TASK=test-couchdb
       before_script:
       script:
-        - pwd
         - source cloudant-config.sh
         - npm run build
         - npm run test
