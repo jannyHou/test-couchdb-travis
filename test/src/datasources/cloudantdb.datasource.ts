@@ -25,7 +25,7 @@ export class CloudantdbDataSource extends juggler.DataSource
       username: process.env.CLOUDANT_USERNAME,
       password: process.env.CLOUDANT_PASSWORD,
       port: process.env.CLOUDANT_PORT,
-    }
+    };
     console.log(inspect(ENV_CONFIG));
     super(ENV_CONFIG);
   }

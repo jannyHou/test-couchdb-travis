@@ -34,8 +34,8 @@ const PING_RESPONSE: ResponseObject = {
 export class PingController {
   constructor(
     @inject(RestBindings.Http.REQUEST) private req: Request,
-    @inject('datasources.cloudantdb') private db: juggler.DataSource
-    ) {}
+    @inject('datasources.cloudantdb') private db: juggler.DataSource,
+  ) {}
 
   // Map to `GET /ping`
   @get('/ping', {
@@ -44,7 +44,7 @@ export class PingController {
     },
   })
   async ping(): Promise<object> {
-    var ping;
+    let ping;
     try {
       ping = await this.db.connect();
     } catch (e) {
