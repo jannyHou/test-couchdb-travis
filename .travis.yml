@@ -11,7 +11,7 @@ script:
   - npm run test
 
 env: TASK=test
-install: cd test && npm ci --ignore-scripts
+install: cd test && npm ci --ignore-scripts && npm run docker:setup
 
 after_success:
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]] && [[ $(echo $TRAVIS_NODE_VERSION | cut -d'.' -f1) == "10" ]]; then npm run coverage:ci; fi
@@ -22,17 +22,16 @@ matrix:
       os: linux
       env:
         - TASK=test-couchdb
-        - CLOUDANT_DATABASE=testdb
-        - CLOUDANT_USER=admin
-        - CLOUDANT_PASSWORD=pass
-        - CLOUDANT_PORT=5984
-        - CLOUDANT_URL=https://admin:pass@localhost:5984
-      services:
-        - couchdb
+        # - CLOUDANT_DATABASE=testdb
+        # - CLOUDANT_USER=admin
+        # - CLOUDANT_PASSWORD=pass
+        # - CLOUDANT_PORT=5984
+        # - CLOUDANT_URL=https://admin:pass@localhost:5984
       before_script:
-        - curl http://localhost:5984
-        - curl -X PUT http://localhost:5984/_node/couchdb@localhost/_config/admins/admin -d '\"pass\"'
-        - echo $(curl -X GET http://localhost:5984/_membership)
+        - echo CLOUDANT_USER && echo CLOUDANT_PORT && echo CLOUDANT_DATABASE
+        - curl -X GET http://localhost:${CLOUDANT_PORT}
+        - curl -X GET http://localhost:${CLOUDANT_PORT}/_node/couchdb@127.0.0.1/_config/admins
+        # - curl -X GET --user "admin:pass" 
         # - curl -s -X PUT http://localhost:5984/_config/admins/admin -d '"pass"'
         # - curl -X PUT http://localhost:5984/testdb
 
