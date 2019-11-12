@@ -22,7 +22,7 @@ export class CloudantdbDataSource extends juggler.DataSource
       connector: 'cloudant',
       url: process.env.CLOUDANT_URL,
       database: process.env.CLOUDANT_DATABASE,
-      username: process.env.CLOUDANT_USER,
+      username: process.env.CLOUDANT_USERNAME,
       password: process.env.CLOUDANT_PASSWORD,
       port: 5984
     }
